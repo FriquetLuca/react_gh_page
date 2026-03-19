@@ -1,9 +1,7 @@
 name: Post-Template Initialization
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: ["**"]
 
 jobs:
   setup:
@@ -13,7 +11,7 @@ jobs:
       contents: write
       actions: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       
       - name: Replace placeholders
         run: |
