@@ -21,9 +21,10 @@ jobs:
           NAME="${{ github.event.repository.name }}"
           OWNER="${{ github.repository_owner }}"
           URL="https://${OWNER}.github.io/${NAME}/"
+          PRETTY_NAME=$(echo "$REPO_NAME" | sed 's/[-_]/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2)}1')
 
-          # 2. Replace Project Name
-          sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json index.html vite.config.ts
+          sed -i "s/TEMPLATE_PRETTY_NAME/$PRETTY_NAME/g" README.md index.html
+          sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json vite.config.ts
 
           # 3. Replace Owner
           sed -i "s/TEMPLATE_OWNER/${OWNER}/g" README.md package.json LICENSE

@@ -1,4 +1,4 @@
-# TEMPLATE_NAME
+# TEMPLATE_PRETTY_NAME
 
 ![Build Status](https://github.com/TEMPLATE_OWNER/TEMPLATE_NAME/actions/workflows/deploy.yml/badge.svg)
 
