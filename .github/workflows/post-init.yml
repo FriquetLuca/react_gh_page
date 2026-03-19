@@ -15,22 +15,22 @@ jobs:
       
       - name: Replace placeholders
         run: |
-          # 1. Define variables for clarity
+          export CURRENT_YEAR=$(date +'%Y')
+          export CURRENT_DATE=$(date +'%Y-%d-%m')
           export NAME="${{ github.event.repository.name }}"
-          OWNER="${{ github.repository_owner }}"
+          export OWNER="${{ github.repository_owner }}"
+          export DESC="${{ github.event.repository.description }}"
           URL="https://${OWNER}.github.io/${NAME}/"
-          PRETTY_NAME=$(python3 -c "import os; print(os.environ['NAME'].replace('-', ' ').replace('_', ' ').title())")
-          echo "Original: $NAME"
-          echo "Pretty Name: $PRETTY_NAME"
+          export PRETTY_NAME=$(python3 -c "import os; print(os.environ['NAME'].replace('-', ' ').replace('_', ' ').title())")
+          export CLEAN_DESC=$(python3 -c "import os; d = os.environ.get('DESC', ''); print(d if d and d != 'None' else 'A React project written in typescript from a template.')")
 
-          sed -i "s/TEMPLATE_PRETTY_NAME/$PRETTY_NAME/g" README.md index.html
           sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json package-lock.json vite.config.ts
-
-          # 3. Replace Owner
           sed -i "s/TEMPLATE_OWNER/${OWNER}/g" README.md package.json package-lock.json LICENSE
-
-          # 4. Replace URL (using | as delimiter because URL contains slashes)
+          sed -i "s|TEMPLATE_DESCRIPTION|$CLEAN_DESC|g" README.md package.json
           sed -i "s|TEMPLATE_URL|${URL}|g" README.md
+          sed -i "s/TEMPLATE_PRETTY_NAME/$PRETTY_NAME/g" README.md index.html
+          sed -i "s|CURRENT_DATE|$CURRENT_DATE|g" CHANGELOG.md
+          sed -i "s|CURRENT_YEAR|$CURRENT_YEAR|g" LICENSE
           
       - name: Cleanup and Commit
         run: |

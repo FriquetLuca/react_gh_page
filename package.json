@@ -3,8 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "TEMPLATE_DESCRIPTION",
   "license": "MIT",
   "author": "TEMPLATE_OWNER",
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TEMPLATE_OWNER/TEMPLATE_NAME.git"
