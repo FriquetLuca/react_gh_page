@@ -11,7 +11,9 @@ permissions:
 jobs:
   deploy:
     # This line prevents the job from running on the template repo itself
-    if: github.repository != 'FriquetLuca/react_gh_page'
+    if: |
+      github.repository != 'FriquetLuca/react_gh_page' && 
+      github.run_number > 1
     runs-on: ubuntu-latest
 
     steps:
