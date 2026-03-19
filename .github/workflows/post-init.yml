@@ -21,8 +21,8 @@ jobs:
           NAME="${{ github.event.repository.name }}"
           OWNER="${{ github.repository_owner }}"
           URL="https://${OWNER}.github.io/${NAME}/"
-          PRETTY_NAME=$(python3 -c "import os; print(os.environ['REPO_NAME'].replace('-', ' ').replace('_', ' ').title())")
-          echo "Original: $REPO_NAME"
+          PRETTY_NAME=$(python3 -c "import os; print(os.environ['NAME'].replace('-', ' ').replace('_', ' ').title())")
+          echo "Original: $NAME"
           echo "Pretty Name: $PRETTY_NAME"
 
           sed -i "s/TEMPLATE_PRETTY_NAME/$PRETTY_NAME/g" README.md index.html
