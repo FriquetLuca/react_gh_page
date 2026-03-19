@@ -26,10 +26,10 @@ jobs:
           echo "Pretty Name: $PRETTY_NAME"
 
           sed -i "s/TEMPLATE_PRETTY_NAME/$PRETTY_NAME/g" README.md index.html
-          sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json vite.config.ts
+          sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json package-lock.json vite.config.ts
 
           # 3. Replace Owner
-          sed -i "s/TEMPLATE_OWNER/${OWNER}/g" README.md package.json LICENSE
+          sed -i "s/TEMPLATE_OWNER/${OWNER}/g" README.md package.json package-lock.json LICENSE
 
           # 4. Replace URL (using | as delimiter because URL contains slashes)
           sed -i "s|TEMPLATE_URL|${URL}|g" README.md
