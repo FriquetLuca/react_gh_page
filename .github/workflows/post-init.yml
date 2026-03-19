@@ -18,7 +18,7 @@ jobs:
       - name: Replace placeholders
         run: |
           # 1. Define variables for clarity
-          NAME="${{ github.event.repository.name }}"
+          export NAME="${{ github.event.repository.name }}"
           OWNER="${{ github.repository_owner }}"
           URL="https://${OWNER}.github.io/${NAME}/"
           PRETTY_NAME=$(python3 -c "import os; print(os.environ['NAME'].replace('-', ' ').replace('_', ' ').title())")
