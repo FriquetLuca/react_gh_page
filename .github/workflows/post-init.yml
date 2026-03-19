@@ -25,7 +25,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          rm .github/workflows/post-init.yml # Remove this script so it only runs once
           git add .
           git commit -m "chore: initialize project from template"
           git push
