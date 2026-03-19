@@ -14,22 +14,25 @@ jobs:
       
       - name: Replace placeholders
         run: |
-          # Replace 'TEMPLATE_NAME' with the actual repo name
-          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" README.md
-          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" package.json
-          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" index.html
-          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" vite.config.ts
-          sed -i "s/TEMPLATE_OWNER/${{ github.event.repository.name }}/g" README.md
-          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" package.json
-          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" LICENSE
-          REPO_URL="https://${{ github.repository_owner }}/github.io/${{ github.event.repository.name }}/"
-          sed -i "s|TEMPLATE_URL|$REPO_URL|g" README.md
+          # 1. Define variables for clarity
+          NAME="${{ github.event.repository.name }}"
+          OWNER="${{ github.repository_owner }}"
+          URL="https://${OWNER}.github.io/${NAME}/"
+
+          # 2. Replace Project Name
+          sed -i "s/TEMPLATE_NAME/${NAME}/g" README.md package.json index.html vite.config.ts
+
+          # 3. Replace Owner
+          sed -i "s/TEMPLATE_OWNER/${OWNER}/g" README.md package.json LICENSE
+
+          # 4. Replace URL (using | as delimiter because URL contains slashes)
+          sed -i "s|TEMPLATE_URL|${URL}|g" README.md
           
       - name: Cleanup and Commit
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          rm .github/workflows/post-init.yml # Remove this script so it only runs once
+          rm .github/workflows/post-init.yml
           git add .
-          git commit -m "chore: initialize project from template"
-          git push
+          # Check if there are changes before committing to avoid errors
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: initialize project" && git push)
