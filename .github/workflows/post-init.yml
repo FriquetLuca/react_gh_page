@@ -16,7 +16,7 @@ jobs:
           sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" index.html
           sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" vite.config.ts
           sed -i "s/TEMPLATE_OWNER/${{ github.event.repository.name }}/g" README.md
-          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" package.md
+          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" package.json
           sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" LICENSE
           REPO_URL="https://${{ github.repository_owner }}/github.io/${{ github.event.repository.name }}/"
           sed -i "s|TEMPLATE_URL|$REPO_URL|g" README.md
