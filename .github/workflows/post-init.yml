@@ -1,0 +1,31 @@
+name: Post-Template Initialization
+on: [push] # This triggers on the first push (the creation of the new repo)
+
+jobs:
+  setup:
+    if: github.run_number == 1 && github.repository != 'FriquetLuca/react_gh_page'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Replace placeholders
+        run: |
+          # Replace 'TEMPLATE_NAME' with the actual repo name
+          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" README.md
+          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" package.json
+          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" index.html
+          sed -i "s/TEMPLATE_NAME/${{ github.event.repository.name }}/g" vite.config.ts
+          sed -i "s/TEMPLATE_OWNER/${{ github.event.repository.name }}/g" README.md
+          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" package.md
+          sed -i "s/TEMPLATE_OWNER/${{ github.repository_owner }}/g" LICENSE
+          REPO_URL="https://${{ github.repository_owner }}/github.io/${{ github.event.repository.name }}/"
+          sed -i "s|TEMPLATE_URL|$REPO_URL|g" README.md
+          
+      - name: Cleanup and Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          rm .github/workflows/post-init.yml # Remove this script so it only runs once
+          git add .
+          git commit -m "chore: initialize project from template"
+          git push
