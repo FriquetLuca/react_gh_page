@@ -16,7 +16,7 @@ jobs:
       - name: Replace placeholders
         run: |
           export CURRENT_YEAR=$(date +'%Y')
-          export CURRENT_DATE=$(date +'%Y-%d-%m')
+          export CURRENT_DATE=$(date +'%Y-%m-%d')
           export NAME="${{ github.event.repository.name }}"
           export OWNER="${{ github.repository_owner }}"
           export DESC="${{ github.event.repository.description }}"
